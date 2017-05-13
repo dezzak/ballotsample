@@ -1,0 +1,17 @@
+{
+  "name": "dezzak/ballot-sample",
+  "description": "Ballot Box Sampling",
+  "minimum-stability": "dev",
+  "license": "GPL3",
+  "authors": [
+    {
+      "name": "Derek Kaye",
+      "email": "ballot-sample@dezzanet.co.uk"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Dezzak\\BallotSample": "app/"
+    }
+  }
+}
