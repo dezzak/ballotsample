@@ -13,6 +13,8 @@ class SampleSheet extends \FPDF
 
     /** @var int */
     private $sampleHeight;
+    /** @var int */
+    private $sampleCount;
 
     /** @return Poll */
     public function getPoll()
@@ -62,9 +64,14 @@ class SampleSheet extends \FPDF
 
         $this->setFont(self::FONT_FACE, '', 12);
         $infoWidth = 55;
+        $preImageX = $this->GetX();
+        $preImageY = $this->GetY();
         $this->Image($candidate->getParty()->getLogoPath(), null, null, 9, 9);
+        $this->setXY($preImageX, $preImageY);
+        $this->Cell(9, 9, '', 1);
         $this->Cell(46, 9, $name, 1);
 
+        $this->sampleCount = 1;
         $this->generateSampleLine();
         $this->Cell($infoWidth);
         $this->generateSampleLine();
@@ -78,7 +85,8 @@ class SampleSheet extends \FPDF
         $this->SetFont(self::FONT_FACE, '', 6);
         $this->SetDrawColor(0x99);
         for ($i = 1; $i <= 45; ++$i) {
-            $this->Cell(3, 3, $i, 1, 0, 'C');
+            $this->Cell(3, 3, ($this->sampleCount % 100), 1, 0, 'C');
+            $this->sampleCount++;
         }
         $this->SetDrawColor(0);
         $this->Ln();
