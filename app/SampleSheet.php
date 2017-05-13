@@ -8,6 +8,12 @@ class SampleSheet extends \FPDF
     /** @var Poll */
     private $poll;
 
+    /** @var int */
+    private $endOfHeader;
+
+    /** @var int */
+    private $sampleHeight;
+
     /** @return Poll */
     public function getPoll()
     {
@@ -26,8 +32,13 @@ class SampleSheet extends \FPDF
         $this->setFont(self::FONT_FACE, '', 12);
 
         $this->generateHeader();
-        $this->generateBoxInfo();
-        $this->generateCandidateSamples();
+        while (($this->GetY() + $this->sampleHeight) < 280) {
+            $this->generateBoxInfo();
+            $this->generateCandidateSamples();
+            if (!$this->sampleHeight) {
+                $this->sampleHeight = $this->GetY() - $this->endOfHeader;
+            }
+        }
     }
 
     private function generateHeader()
@@ -35,6 +46,7 @@ class SampleSheet extends \FPDF
         $this->setFont(self::FONT_FACE, 'B', 15);
         $this->Cell(190, 10, $this->poll->getDescription(), 1, 0, 'C');
         $this->Ln();
+        $this->endOfHeader = $this->GetY();
     }
 
     private function generateCandidateSamples()
