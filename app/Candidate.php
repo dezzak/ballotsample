@@ -10,18 +10,24 @@ namespace Dezzak\BallotSample;
  */
 class Candidate
 {
+    /** @var string */
     private $surname;
+    /** @var string */
     private $firstNames;
+    /** @var Party */
+    private $party;
 
     /**
      * Candidate constructor.
      * @param string $surname
      * @param string $firstNames
+     * @param Party $party
      */
-    public function __construct($surname, $firstNames)
+    public function __construct($surname, $firstNames, Party $party)
     {
         $this->surname = $surname;
         $this->firstNames = $firstNames;
+        $this->party = $party;
     }
 
     /**
@@ -40,4 +46,11 @@ class Candidate
         return $this->firstNames;
     }
 
+    /**
+     * @return Party
+     */
+    public function getParty()
+    {
+        return $this->party;
+    }
 }
