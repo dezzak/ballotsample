@@ -46,7 +46,7 @@ class SampleSheet extends \FPDF
 
     private function generateCandidateSample(Candidate $candidate)
     {
-        $name = strtoupper($candidate->getSurname()) . ', ' . $candidate->getFirstNames();
+        $name = strtoupper($candidate->getSurname()) . ', ' . explode(' ', $candidate->getFirstNames())[0];
 
         $this->setFont(self::FONT_FACE, '', 12);
         $infoWidth = 40;
