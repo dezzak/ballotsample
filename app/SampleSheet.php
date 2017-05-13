@@ -61,8 +61,9 @@ class SampleSheet extends \FPDF
         $name = strtoupper($candidate->getSurname()) . ', ' . explode(' ', $candidate->getFirstNames())[0];
 
         $this->setFont(self::FONT_FACE, '', 12);
-        $infoWidth = 40;
-        $this->Cell($infoWidth, 9, $name, 1);
+        $infoWidth = 55;
+        $this->Image($candidate->getParty()->getLogoPath(), null, null, 9, 9);
+        $this->Cell(46, 9, $name, 1);
 
         $this->generateSampleLine();
         $this->Cell($infoWidth);
@@ -76,7 +77,7 @@ class SampleSheet extends \FPDF
     {
         $this->SetFont(self::FONT_FACE, '', 6);
         $this->SetDrawColor(0x99);
-        for ($i = 1; $i <= 50; ++$i) {
+        for ($i = 1; $i <= 45; ++$i) {
             $this->Cell(3, 3, $i, 1, 0, 'C');
         }
         $this->SetDrawColor(0);
