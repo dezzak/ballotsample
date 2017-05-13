@@ -37,6 +37,15 @@ class Poll
      */
     public function getCandidates()
     {
+        usort($this->candidates, [$this, 'sortCandidate']);
         return $this->candidates;
+    }
+
+    private function sortCandidate(Candidate $candidateA, Candidate $candidateB)
+    {
+        if ($candidateA->getSurname() === $candidateB->getSurname()) {
+            return 0;
+        }
+        return $candidateA->getSurname() < $candidateB->getSurname() ? -1 : 1;
     }
 }
