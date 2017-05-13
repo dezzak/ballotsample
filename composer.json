@@ -9,9 +9,12 @@
       "email": "ballot-sample@dezzanet.co.uk"
     }
   ],
+  "require":{
+    "setasign/fpdf": "1.8.*"
+  },
   "autoload": {
     "psr-4": {
-      "Dezzak\\BallotSample": "app/"
+      "Dezzak\\BallotSample\\": "app/"
     }
   }
 }
