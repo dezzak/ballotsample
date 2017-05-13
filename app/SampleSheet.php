@@ -26,13 +26,60 @@ class SampleSheet extends \FPDF
         $this->setFont(self::FONT_FACE, '', 12);
 
         $this->generateHeader();
+        $this->generateBoxInfo();
+        $this->generateCandidateSamples();
     }
 
     private function generateHeader()
     {
         $this->setFont(self::FONT_FACE, 'B', 15);
-        $this->Cell(80);
-        $this->Cell(30, 10, $this->poll->getDescription(), 1, 0, 'C');
-        $this->Ln(20);
+        $this->Cell(190, 10, $this->poll->getDescription(), 1, 0, 'C');
+        $this->Ln();
+    }
+
+    private function generateCandidateSamples()
+    {
+        foreach ($this->poll->getCandidates() as $candidate) {
+            $this->generateCandidateSample($candidate);
+        }
+    }
+
+    private function generateCandidateSample(Candidate $candidate)
+    {
+        $name = strtoupper($candidate->getSurname()) . ', ' . $candidate->getFirstNames();
+
+        $this->setFont(self::FONT_FACE, '', 12);
+        $infoWidth = 40;
+        $this->Cell($infoWidth, 9, $name, 1);
+
+        $this->generateSampleLine();
+        $this->Cell($infoWidth);
+        $this->generateSampleLine();
+        $this->Cell($infoWidth);
+        $this->generateSampleLine();
+        $this->Ln();
+    }
+
+    private function generateSampleLine()
+    {
+        $this->setFont(self::FONT_FACE, '', 6);
+        for ($i = 1; $i <= 50; ++$i) {
+            $this->Cell(3, 3, $i, 1, 0, 'C');
+        }
+        $this->Ln();
+    }
+
+    private function generateBoxInfo()
+    {
+        $this->setFont(self::FONT_FACE, 'B', 10);
+        $lineHeight = 8;
+        $this->Cell(25, $lineHeight, 'Box Location');
+        $this->Cell(165, $lineHeight, '', 'B');
+        $this->Ln();
+        $this->Cell(25, $lineHeight, 'Box Number');
+        $this->Cell(70, $lineHeight, '', 'B');
+        $this->Cell(25, $lineHeight, 'Polling District');
+        $this->Cell(70, $lineHeight, '', 'B');
+        $this->Ln(9);
     }
 }
