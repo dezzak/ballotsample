@@ -62,10 +62,12 @@ class SampleSheet extends \FPDF
 
     private function generateSampleLine()
     {
-        $this->setFont(self::FONT_FACE, '', 6);
+        $this->SetFont(self::FONT_FACE, '', 6);
+        $this->SetDrawColor(0x99);
         for ($i = 1; $i <= 50; ++$i) {
             $this->Cell(3, 3, $i, 1, 0, 'C');
         }
+        $this->SetDrawColor(0);
         $this->Ln();
     }
 
@@ -80,6 +82,6 @@ class SampleSheet extends \FPDF
         $this->Cell(70, $lineHeight, '', 'B');
         $this->Cell(25, $lineHeight, 'Polling District');
         $this->Cell(70, $lineHeight, '', 'B');
-        $this->Ln(9);
+        $this->Ln(12);
     }
 }
