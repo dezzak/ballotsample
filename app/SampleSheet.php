@@ -61,6 +61,20 @@ class SampleSheet
         $this->endOfHeader = $this->pdf->getY();
     }
 
+    private function generateBoxInfo()
+    {
+        $this->pdf->setFont(self::FONT_FACE, 'B', 10);
+        $lineHeight = 8;
+        $this->pdf->addCell(25, $lineHeight, 'Box Location');
+        $this->pdf->addCell(165, $lineHeight, '', 'B');
+        $this->pdf->addLine();
+        $this->pdf->addCell(25, $lineHeight, 'Box Number');
+        $this->pdf->addCell(70, $lineHeight, '', 'B');
+        $this->pdf->addCell(25, $lineHeight, 'Polling District');
+        $this->pdf->addCell(70, $lineHeight, '', 'B');
+        $this->pdf->addLine(12);
+    }
+
     private function generateCandidateSamples()
     {
         foreach ($this->poll->getCandidates() as $candidate) {
@@ -106,19 +120,5 @@ class SampleSheet
         }
         $this->pdf->SetDrawColour(0, 0, 0);
         $this->pdf->addLine();
-    }
-
-    private function generateBoxInfo()
-    {
-        $this->pdf->setFont(self::FONT_FACE, 'B', 10);
-        $lineHeight = 8;
-        $this->pdf->addCell(25, $lineHeight, 'Box Location');
-        $this->pdf->addCell(165, $lineHeight, '', 'B');
-        $this->pdf->addLine();
-        $this->pdf->addCell(25, $lineHeight, 'Box Number');
-        $this->pdf->addCell(70, $lineHeight, '', 'B');
-        $this->pdf->addCell(25, $lineHeight, 'Polling District');
-        $this->pdf->addCell(70, $lineHeight, '', 'B');
-        $this->pdf->addLine(12);
     }
 }
