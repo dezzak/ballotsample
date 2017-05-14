@@ -112,9 +112,43 @@ class SampleSheet
 
     private function writeCandidateName(Candidate $candidate)
     {
-        $this->pdf->setFont(self::FONT_FACE, '', 12);
-        $name = strtoupper($candidate->getSurname()) . ', ' . explode(' ', $candidate->getFirstNames())[0];
-        $this->pdf->addCell((self::INFO_WIDTH - self::LOGO_SIZE), self::LOGO_SIZE, $name, 1);
+        $fontSize = 12;
+        $availableWidth = self::INFO_WIDTH - self::LOGO_SIZE;
+
+        $nameParts = $this->getNameParts($candidate);
+        $this->pdf->setFont(self::FONT_FACE, '', $fontSize);
+        while (count($nameParts) > 1 && ($this->pdf->getStringWidth($this->getCandidateString($nameParts)) + 3) > $availableWidth) {
+            array_pop($nameParts);
+        }
+        while ($fontSize > 4 && ($this->pdf->getStringWidth($this->getCandidateString($nameParts)) + 3) > $availableWidth) {
+            $fontSize -= 0.5;
+            $this->pdf->setFont(self::FONT_FACE, '', $fontSize);
+        }
+        $name = $this->getCandidateString($nameParts);
+
+
+        $this->pdf->addCell($availableWidth, self::LOGO_SIZE, $name, 1);
+    }
+
+    private function getNameParts(Candidate $candidate)
+    {
+        $nameParts[] = strtoupper($candidate->getSurname());
+        $nameParts = array_merge($nameParts, explode(' ', $candidate->getFirstNames()));
+        return $nameParts;
+    }
+
+    private function getCandidateString(array $nameParts)
+    {
+        $workingParts = $nameParts;
+        $string = $workingParts[0];
+        if (count($workingParts) > 1) {
+            $string .= ', ';
+            array_shift($workingParts);
+
+            $string .= join(' ', $workingParts);
+        }
+
+        return $string;
     }
 
     private function generateSampleLine()
