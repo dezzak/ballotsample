@@ -60,7 +60,7 @@ class SampleSheet
         $this->pdf->setFont(self::FONT_FACE, 'B', 15);
         $this->pdf->addCell(self::PAGE_WIDTH, 10, $this->poll->getDescription(), 'LTR', 0, 'C');
         $this->pdf->addLine();
-        $this->pdf->addCell(self::PAGE_WIDTH, 10, $this->poll->getDate()->format('l, F jS Y'), 'LBR', 0, 'C');
+        $this->pdf->addCell(self::PAGE_WIDTH, 10, $this->poll->getDate()->format('l, jS F Y'), 'LBR', 0, 'C');
         $this->pdf->addLine();
         $this->endOfHeader = $this->pdf->getY();
     }
