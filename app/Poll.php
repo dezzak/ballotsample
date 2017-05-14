@@ -10,13 +10,17 @@ class Poll
     /** @var Candidate[] */
     private $candidates = [];
 
+    /** @var \DateTimeInterface */
+    private $date;
+
     /**
      * Poll constructor.
      * @param string $description
      */
-    public function __construct($description)
+    public function __construct($description, \DateTimeInterface $date)
     {
         $this->description = $description;
+        $this->date = $date;
     }
 
     public function addCandidate(Candidate $candidate)
@@ -47,5 +51,10 @@ class Poll
             return 0;
         }
         return $candidateA->getSurname() < $candidateB->getSurname() ? -1 : 1;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 }
