@@ -56,4 +56,9 @@ class FPDFAdapter implements PDFInterface
     {
         $this->fpdf->Image($filePath, null, null, $width, $height);
     }
+
+    public function outputToFile($fileName)
+    {
+        $this->fpdf->Output('F', $fileName);
+    }
 }

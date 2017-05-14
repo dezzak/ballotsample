@@ -36,4 +36,6 @@ interface PDFInterface
     public function addLine($height = null);
 
     public function addImage($filePath, $width = 0, $height = 0);
+
+    public function outputToFile($fileName);
 }
