@@ -29,7 +29,6 @@ class SampleSheet extends \FPDF
 
     public function generate()
     {
-        $this->AliasNbPages();
         $this->AddPage();
         $this->setFont(self::FONT_FACE, '', 12);
 
