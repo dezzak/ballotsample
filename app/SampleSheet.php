@@ -80,12 +80,15 @@ class SampleSheet
         $this->pdf->addCell(self::LOGO_SIZE, self::LOGO_SIZE, '', 1);
         $this->pdf->addCell((self::INFO_WIDTH - self::LOGO_SIZE), self::LOGO_SIZE, $name, 1);
 
+        $numberOfSampleLines = floor(self::LOGO_SIZE / self::BOX_SIZE);
+
         $this->sampleCount = 1;
         $this->generateSampleLine();
-        $this->pdf->addCell(self::INFO_WIDTH);
-        $this->generateSampleLine();
-        $this->pdf->addCell(self::INFO_WIDTH);
-        $this->generateSampleLine();
+
+        for (;$numberOfSampleLines > 1; --$numberOfSampleLines) {
+            $this->pdf->addCell(self::INFO_WIDTH);
+            $this->generateSampleLine();
+        }
         $this->pdf->addLine();
     }
 
