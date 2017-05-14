@@ -7,12 +7,14 @@ use Dezzak\BallotSample\Output\PDFInterface;
 class SampleSheet
 {
     const FONT_FACE = 'Times';
+    const BOX_SIZE = 3;
+    const INFO_WIDTH = 55;
+    const PAGE_WIDTH = 190;
+    const LOGO_SIZE = 9;
     /** @var Poll */
     private $poll;
-
     /** @var int */
     private $endOfHeader;
-
     /** @var int */
     private $sampleHeight;
     /** @var int */
@@ -54,7 +56,7 @@ class SampleSheet
     private function generateHeader()
     {
         $this->pdf->setFont(self::FONT_FACE, 'B', 15);
-        $this->pdf->addCell(190, 10, $this->poll->getDescription(), 1, 0, 'C');
+        $this->pdf->addCell(self::PAGE_WIDTH, 10, $this->poll->getDescription(), 1, 0, 'C');
         $this->pdf->addLine();
         $this->endOfHeader = $this->pdf->getY();
     }
@@ -71,19 +73,18 @@ class SampleSheet
         $name = strtoupper($candidate->getSurname()) . ', ' . explode(' ', $candidate->getFirstNames())[0];
 
         $this->pdf->setFont(self::FONT_FACE, '', 12);
-        $infoWidth = 55;
         $preImageX = $this->pdf->getX();
         $preImageY = $this->pdf->getY();
-        $this->pdf->addImage($candidate->getParty()->getLogoPath(), 9, 9);
+        $this->pdf->addImage($candidate->getParty()->getLogoPath(), self::LOGO_SIZE, self::LOGO_SIZE);
         $this->pdf->setXY($preImageX, $preImageY);
-        $this->pdf->addCell(9, 9, '', 1);
-        $this->pdf->addCell(46, 9, $name, 1);
+        $this->pdf->addCell(self::LOGO_SIZE, self::LOGO_SIZE, '', 1);
+        $this->pdf->addCell((self::INFO_WIDTH - self::LOGO_SIZE), self::LOGO_SIZE, $name, 1);
 
         $this->sampleCount = 1;
         $this->generateSampleLine();
-        $this->pdf->addCell($infoWidth);
+        $this->pdf->addCell(self::INFO_WIDTH);
         $this->generateSampleLine();
-        $this->pdf->addCell($infoWidth);
+        $this->pdf->addCell(self::INFO_WIDTH);
         $this->generateSampleLine();
         $this->pdf->addLine();
     }
@@ -92,8 +93,12 @@ class SampleSheet
     {
         $this->pdf->setFont(self::FONT_FACE, '', 6);
         $this->pdf->setDrawColour(0x99, 0x99, 0x99);
-        for ($i = 1; $i <= 45; ++$i) {
-            $this->pdf->addCell(3, 3, ($this->sampleCount % 100), 1, 0, 'C');
+
+        $mmAvailable = self::PAGE_WIDTH - self::INFO_WIDTH; // page width - info width
+        $numberOfBoxes = floor($mmAvailable / self::BOX_SIZE);
+
+        for ($i = 1; $i <= $numberOfBoxes; ++$i) {
+            $this->pdf->addCell(self::BOX_SIZE, self::BOX_SIZE, ($this->sampleCount % 100), 1, 0, 'C');
             $this->sampleCount++;
         }
         $this->pdf->SetDrawColour(0, 0, 0);
