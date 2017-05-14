@@ -7,10 +7,12 @@ use Dezzak\BallotSample\Output\PDFInterface;
 class SampleSheet
 {
     const FONT_FACE = 'Times';
+    const PAGE_WIDTH = 190;
+    const PAGE_HEIGHT = 280;
     const BOX_SIZE = 3;
     const INFO_WIDTH = 55;
-    const PAGE_WIDTH = 190;
     const LOGO_SIZE = 9;
+    const LABEL_WIDTH = 25;
     /** @var Poll */
     private $poll;
     /** @var int */
@@ -44,7 +46,7 @@ class SampleSheet
         $this->pdf->setFont(self::FONT_FACE, '', 12);
 
         $this->generateHeader();
-        while (($this->pdf->getY() + $this->sampleHeight) < 280) {
+        while (($this->pdf->getY() + $this->sampleHeight) < self::PAGE_HEIGHT) {
             $this->generateBoxInfo();
             $this->generateCandidateSamples();
             if (!$this->sampleHeight) {
@@ -65,13 +67,13 @@ class SampleSheet
     {
         $this->pdf->setFont(self::FONT_FACE, 'B', 10);
         $lineHeight = 8;
-        $this->pdf->addCell(25, $lineHeight, 'Box Location');
-        $this->pdf->addCell(165, $lineHeight, '', 'B');
+        $this->pdf->addCell(self::LABEL_WIDTH, $lineHeight, 'Box Location');
+        $this->pdf->addCell(self::PAGE_WIDTH - self::LABEL_WIDTH, $lineHeight, '', 'B');
         $this->pdf->addLine();
-        $this->pdf->addCell(25, $lineHeight, 'Box Number');
-        $this->pdf->addCell(70, $lineHeight, '', 'B');
-        $this->pdf->addCell(25, $lineHeight, 'Polling District');
-        $this->pdf->addCell(70, $lineHeight, '', 'B');
+        $this->pdf->addCell(self::LABEL_WIDTH, $lineHeight, 'Box Number');
+        $this->pdf->addCell((self::PAGE_WIDTH / 2) - self::LABEL_WIDTH, $lineHeight, '', 'B');
+        $this->pdf->addCell(self::LABEL_WIDTH, $lineHeight, 'Polling District');
+        $this->pdf->addCell((self::PAGE_WIDTH / 2) - self::LABEL_WIDTH, $lineHeight, '', 'B');
         $this->pdf->addLine(12);
     }
 
