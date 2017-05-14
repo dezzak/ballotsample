@@ -86,15 +86,8 @@ class SampleSheet
 
     private function generateCandidateSample(Candidate $candidate)
     {
-        $name = strtoupper($candidate->getSurname()) . ', ' . explode(' ', $candidate->getFirstNames())[0];
-
-        $this->pdf->setFont(self::FONT_FACE, '', 12);
-        $preImageX = $this->pdf->getX();
-        $preImageY = $this->pdf->getY();
-        $this->pdf->addImage($candidate->getParty()->getLogoPath(), self::LOGO_SIZE, self::LOGO_SIZE);
-        $this->pdf->setXY($preImageX, $preImageY);
-        $this->pdf->addCell(self::LOGO_SIZE, self::LOGO_SIZE, '', 1);
-        $this->pdf->addCell((self::INFO_WIDTH - self::LOGO_SIZE), self::LOGO_SIZE, $name, 1);
+        $this->writeCandidateLogo($candidate);
+        $this->writeCandidateName($candidate);
 
         $numberOfSampleLines = floor(self::LOGO_SIZE / self::BOX_SIZE);
 
@@ -106,6 +99,22 @@ class SampleSheet
             $this->generateSampleLine();
         }
         $this->pdf->addLine();
+    }
+
+    private function writeCandidateLogo(Candidate $candidate)
+    {
+        $preImageX = $this->pdf->getX();
+        $preImageY = $this->pdf->getY();
+        $this->pdf->addImage($candidate->getParty()->getLogoPath(), self::LOGO_SIZE, self::LOGO_SIZE);
+        $this->pdf->setXY($preImageX, $preImageY);
+        $this->pdf->addCell(self::LOGO_SIZE, self::LOGO_SIZE, '', 1);
+    }
+
+    private function writeCandidateName(Candidate $candidate)
+    {
+        $this->pdf->setFont(self::FONT_FACE, '', 12);
+        $name = strtoupper($candidate->getSurname()) . ', ' . explode(' ', $candidate->getFirstNames())[0];
+        $this->pdf->addCell((self::INFO_WIDTH - self::LOGO_SIZE), self::LOGO_SIZE, $name, 1);
     }
 
     private function generateSampleLine()
