@@ -61,4 +61,9 @@ class FPDFAdapter implements PDFInterface
     {
         $this->fpdf->Output('F', $fileName);
     }
+
+    public function getStringWidth($string)
+    {
+        return $this->fpdf->GetStringWidth($string);
+    }
 }

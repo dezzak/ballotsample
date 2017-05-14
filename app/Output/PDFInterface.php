@@ -38,4 +38,6 @@ interface PDFInterface
     public function addImage($filePath, $width = 0, $height = 0);
 
     public function outputToFile($fileName);
+
+    public function getStringWidth($string);
 }
