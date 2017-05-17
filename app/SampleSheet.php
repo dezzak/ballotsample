@@ -9,9 +9,9 @@ class SampleSheet
     const FONT_FACE = 'Times';
     const PAGE_WIDTH = 190;
     const PAGE_HEIGHT = 280;
-    const BOX_SIZE = 3;
+    const BOX_SIZE = 4;
     const INFO_WIDTH = 55;
-    const LOGO_SIZE = 9;
+    const LOGO_SIZE = 12;
     const LABEL_WIDTH = 25;
     /** @var Poll */
     private $poll;
