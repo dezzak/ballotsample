@@ -53,7 +53,7 @@ $date = new DateTime('2017-06-08', new DateTimeZone('Europe/London'));
 
 $poll = new Poll('Some Constituency', $date);
 $poll->addCandidate($farron);
-$poll->addCandidate($morris);
+$poll->addCandidate($corbyn);
 $poll->addCandidate($lucas);
 $poll->addCandidate($may);
 $poll->addCandidate($nuttall);
